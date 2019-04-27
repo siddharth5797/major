@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymleaf.org">
+<head>
+    <title>Authorization Logs</title>
+    <link rel="shortcut icon" type="image/png" th:href="@{/favicon.png}"/>
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+    <script th:src="@{/jquery.min.js}"></script>
+    <script th:src="@{/bootstrap.min.js}"></script>
+    <script th:src="@{/loader.js}"></script>
+    <style>
+        .blabel{
+            color: black;
+        }
+    </style>
+
+</head>
+<body>
+<div class="" style="border: 0px;margin: 0px;padding: 0px">
+    <div class="row" style="height: 65px;background-color: whitesmoke;width: 100%;margin: 0px">
+        <div class="col-md-2"><img th:src="@{/upes.png}" height="65px" width="auto"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-6"><br>
+            <h2 align="center">Log Management System</h2></div>
+    </div>
+
+    <input type="hidden" id="successCount" th:data-count="${successLoginCount}">
+    <input type="hidden" id="failedCount" th:data-count="${failedLoginCount}">
+
+    <div class="row">
+        <div class="col-md-2"
+             style="background-color: lightgrey;width: 150px;height: 530px;padding-left: 20px;padding-top: 20px">
+            <nav class="nav nav-pills flex-column">
+                <a class="nav-link active" href="/login">Login Logs</a>
+                <a class="nav-link" href="/external">External Drive Logs</a>
+            </nav>
+        </div>
+        <div class="col-md-10">
+
+            <div class="row">
+                <div class="col-md-6" style="padding: 10px">
+                    <div id="chart_div"></div>
+                </div>
+                <div class="col-md-6" style="padding: 10px">
+                    <div id="piechart"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6" style="padding: 10px;padding-top: 0px">
+                    <div class="card border-dark mb-3 w-100">
+                        <div class="card-header">Successful Logins:
+                        </div>
+                        <div class="card-body text-dark" style="height: 250px;overflow: scroll">
+                            <div class="card mb-3" th:each="successLogins:${successLogin}">
+                                <div class="row no-gutters">
+                                    <div class="col-md-3" style="vertical-align: center;align-self: center;text-align: center"><img th:src="@{/success.png}" height="60px"></div>
+                                    <div class="col-md-9">
+                                        <div class="card-body">
+                                            <p class="card-title"><label class="blabel">Date:</label> <label
+                                                    th:text="${successLogins.date}"></label>
+                                            </p>
+                                            <p class="card-text"><label class="blabel">Time:</label> <label
+                                                    th:text="${successLogins.time}"></label></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" style="padding: 10px;padding-top: 0px">
+                    <div class="card border-dark mb-3 w-100">
+                        <div class="card-header">Failed Logins:
+                        </div>
+                        <div class="card-body text-dark" style="height: 250px;overflow: scroll">
+                            <div class="card mb-3" th:each="failedLogins:${failedLogin}">
+                                <div class="row no-gutters">
+                                    <div class="col-md-3" style="vertical-align: center;align-self: center;text-align: center"><img th:src="@{/failure.png}" height="60px"></div>
+                                    <div class="col-md-9">
+                                        <div class="card-body">
+                                            <p class="card-title"><label class="blabel">Date:</label> <label
+                                                    th:text="${failedLogins.date}"></label>
+                                            </p>
+                                            <p class="card-text"><label class="blabel">Time:</label> <label
+                                                    th:text="${failedLogins.time}"></label></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    google.charts.load('current', {packages: ['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawBasic);
+    var success = parseInt($('#successCount').attr("data-count"));
+    var failure = parseInt($('#failedCount').attr("data-count"));
+
+    function drawBasic() {
+        var data = google.visualization.arrayToDataTable([
+            ['Logins', 'Count', {role: 'style'}],
+            ['Success', success, 'color: green'],
+            ['Failures', failure, 'color: red'],
+        ]);
+
+        var options = {
+            title: 'Bar Chart for System Logins',
+            chartArea: {width: '50%'},
+            hAxis: {
+                title: 'Login Count',
+                minValue: 0
+            },
+            vAxis: {
+                title: 'Logins'
+            }
+        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>
+<script>
+    google.charts.load('current', {'packages': ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    var success = parseInt($('#successCount').attr("data-count"));
+    var failure = parseInt($('#failedCount').attr("data-count"));
+
+    function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['Logins', ' Login Count'],
+            ['Success', success],
+            ['Failures', failure]
+        ]);
+
+        var options = {
+            title: 'Pie Chart for System Logins',
+            is3D: true
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+    }
+</script>
+</html>

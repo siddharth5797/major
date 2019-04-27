@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymleaf.org">
+<head>
+    <title>Authorization Logs</title>
+    <link rel="shortcut icon" type="image/png" th:href="@{/favicon.png}"/>
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+    <script th:src="@{/jquery.min.js}"></script>
+    <script th:src="@{/bootstrap.min.js}"></script>
+    <style>
+        .blabel{
+            color: black;
+        }
+    </style>
+
+</head>
+<body>
+<div class="" style="border: 0px;margin: 0px;padding: 0px">
+    <div class="row" style="height: 65px;background-color: whitesmoke;width: 100%;margin: 0px">
+        <div class="col-md-2"><img th:src="@{/upes.png}" height="65px" width="auto"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-6"><br>
+            <h2 align="center">Log Management System</h2></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2"
+             style="background-color: lightgrey;width: 150px;height: 510px;padding-left: 20px;padding-top: 20px">
+            <nav class="nav nav-pills flex-column">
+                <a class="nav-link" href="/login">Login Logs</a>
+                <a class="nav-link active" href="/external">External Drive Logs</a>
+            </nav>
+        </div>
+        <div class="col-md-10">
+            <br>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10" style="padding: 10px;padding-top: 0px">
+                    <div class="card border-dark mb-3 w-100">
+                        <div class="card-header">Exernal USB Drive Logs:
+                        </div>
+                        <div class="card-body text-dark" style="height: 420px;overflow: scroll">
+                            <div class="card mb-3" th:each="deviceDetail:${deviceDetails}">
+                                <div class="row no-gutters">
+                                    <div class="col-md-3" style="vertical-align: center;align-self: center;text-align: center"><img th:src="@{/usb.jpg}"></div>
+                                    <div class="col-md-9">
+                                        <div class="row card-body">
+                                            <div class="col-md-5">
+                                                <p class="card-title"><label class="blabel">Date:</label> <label
+                                                        th:text="${deviceDetail.date}"></label></p>
+                                                <p class="card-text"><label class="blabel">Time:</label> <label
+                                                        th:text="${deviceDetail.time}"></label></p>
+                                                <p class="card-text"><label class="blabel">Manufacturer:</label> <label
+                                                        th:text="${deviceDetail.manufacturer}"></label></p>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <p class="card-text"><label class="blabel">Product:</label> <label
+                                                        th:text="${deviceDetail.product}"></label></p>
+                                                <p class="card-text"><label class="blabel">Serial Number:</label> <label
+                                                        th:text="${deviceDetail.serialNumber}"></label></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
