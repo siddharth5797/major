@@ -23,12 +23,12 @@
             <h2 align="center">Log Management System</h2></div>
     </div>
 
-    <input type="hidden" id="successCount" th:data-count="${successLoginCount}">
-    <input type="hidden" id="failedCount" th:data-count="${failedLoginCount}">
+
+
 
     <div class="row">
         <div class="col-md-2"
-             style="background-color: lightgrey;width: 150px;height: 530px;padding-left: 20px;padding-top: 20px">
+             style="background-color: lightgrey;width: 120px;height: 530px;padding-left: 20px;padding-top: 20px">
             <nav class="nav nav-pills flex-column">
                 <a class="nav-link active" href="/login">Login Logs</a>
                 <a class="nav-link" href="/external">External Drive Logs</a>
@@ -48,7 +48,7 @@
             <div class="row">
                 <div class="col-md-6" style="padding: 10px;padding-top: 0px">
                     <div class="card border-dark mb-3 w-100">
-                        <div class="card-header">Successful Logins:
+                        <div class="card-header">Successful Logins (<label type="hidden" id="successCount" th:data-count="${successLoginCount}" th:text="${successLoginCount}"></label>):
                         </div>
                         <div class="card-body text-dark" style="height: 250px;overflow: scroll">
                             <div class="card mb-3" th:each="successLogins:${successLogin}">
@@ -70,7 +70,7 @@
                 </div>
                 <div class="col-md-6" style="padding: 10px;padding-top: 0px">
                     <div class="card border-dark mb-3 w-100">
-                        <div class="card-header">Failed Logins:
+                        <div class="card-header">Failed Logins (<label type="hidden" id="failedCount" th:data-count="${failedLoginCount}" th:text="${failedLoginCount}"></label>):
                         </div>
                         <div class="card-body text-dark" style="height: 250px;overflow: scroll">
                             <div class="card mb-3" th:each="failedLogins:${failedLogin}">

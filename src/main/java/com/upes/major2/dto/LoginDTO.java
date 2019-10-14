@@ -1,6 +1,5 @@
 package com.upes.major2.dto;
 
-import lombok.Data;
 import org.springframework.stereotype.Component;
 
 @Component
